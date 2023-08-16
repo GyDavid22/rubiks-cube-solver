@@ -29,6 +29,10 @@ public abstract class Cube {
         this.sides = sides;
     }
 
+    protected int getSize() {
+        return this.cubeSize;
+    }
+
     /**
      * 
      * @return true If every side has only one color, false otherwise.

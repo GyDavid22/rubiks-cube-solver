@@ -47,14 +47,10 @@ public class Main {
                     }
                 }
         };
-        for (int i = 0; i < 4; i++) {
-            manipulations[0].execute(true, false);
-            System.out.println(c.toString());
-        }
+        manipulations[0].execute(true, true);
+        System.out.println(c.toString());
         System.out.println("-----------------------");
-        for (int i = 0; i < 4; i++) {
-            manipulations[1].execute(true, false);
-            System.out.println(c.toString());
-        }
+        manipulations[1].execute(true, true);
+        System.out.println(c.toString());
     }
 }

@@ -37,6 +37,7 @@ public enum Color {
     public static Color toEnum(String colorCode) throws ColorNotFoundException {
         if (!Color.initialized) {
             Color.initializeMap();
+            Color.initialized = true;
         }
         Color result = Color.colorMap.get(colorCode);
         if (result == null) {

@@ -20,7 +20,7 @@ public class Cube3x3 extends Cube {
             int colorsIndex = 0;
             List<Integer> affectedSides = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
             for (int j : affectedSides) {
-                for (int k = 0; k < 3; k++) {
+                for (int k = 0; k < this.getSize(); k++) {
                     colors[colorsIndex++] = this.getSides()[j].getTileColor(0, k);
                 }
             }
@@ -31,7 +31,7 @@ public class Cube3x3 extends Cube {
                 affectedSides.add(affectedSides.remove(0));
             }
             for (int j : affectedSides) {
-                for (int k = 0; k < 3; k++) {
+                for (int k = 0; k < this.getSize(); k++) {
                     this.getSides()[j].setTileColor(0, k, colors[colorsIndex++]);
                 }
             }
@@ -47,7 +47,7 @@ public class Cube3x3 extends Cube {
             int colorsIndex = 0;
             List<Integer> affectedSides = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
             for (int j : affectedSides) {
-                for (int k = 0; k < 3; k++) {
+                for (int k = 0; k < this.getSize(); k++) {
                     colors[colorsIndex++] = this.getSides()[j].getTileColor(2, k);
                 }
             }
@@ -59,7 +59,7 @@ public class Cube3x3 extends Cube {
                 affectedSides.add(0, affectedSides.remove(affectedSides.size() - 1));
             }
             for (int j : affectedSides) {
-                for (int k = 0; k < 3; k++) {
+                for (int k = 0; k < this.getSize(); k++) {
                     this.getSides()[j].setTileColor(2, k, colors[colorsIndex++]);
                 }
             }
