@@ -1,7 +1,7 @@
 package structures;
 
 /** Abstract class for Rubik's cubes. */
-public abstract class Cube {
+public abstract class Cube implements Cloneable {
     /** See the documentation about the indexing. */
     private Side[] sides;
     private int cubeSize;
@@ -49,6 +49,9 @@ public abstract class Cube {
     protected Side[] getSides() {
         return this.sides;
     }
+
+    @Override
+    public abstract Cube clone();
 
     @Override
     public String toString() {

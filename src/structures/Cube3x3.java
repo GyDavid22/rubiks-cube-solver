@@ -11,6 +11,10 @@ public class Cube3x3 extends Cube {
         super(3);
     }
 
+    private Cube3x3(Side[] sides) {
+        super(3, sides);
+    }
+
     public void Up(Boolean clockwise, Boolean doubleTurn) {
         int count = doubleTurn ? 2 : 1;
         for (int i = 0; i < count; i++) {
@@ -80,5 +84,10 @@ public class Cube3x3 extends Cube {
 
     public void Back(Boolean clockwise, Boolean doubleTurn) {
 
+    }
+
+    @Override
+    public Cube clone() {
+        return new Cube3x3(this.getSides().clone());
     }
 }

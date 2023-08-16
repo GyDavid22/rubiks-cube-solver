@@ -1,7 +1,7 @@
 package structures;
 
 /** Class to represent the sides of the Rubik's cube. */
-public class Side {
+public class Side implements Cloneable {
     /** The size of the cube, e.g. 3 means a 3*3 cube. */
     private int cubeSize;
 
@@ -34,6 +34,15 @@ public class Side {
             }
         }
         this.colors = colors;
+    }
+
+    @Override
+    public Side clone() {
+        Color[][] newColors = new Color[this.cubeSize][];
+        for (int i = 0; i < newColors.length; i++) {
+            newColors[i] = this.colors[i].clone();
+        }
+        return new Side(this.cubeSize, newColors);
     }
 
     /**
