@@ -6,7 +6,7 @@ public abstract class Cube {
     private Side[] sides;
     private int cubeSize;
 
-    /** Default constructor, paints the cube the official, done way. */
+    /** Paints the cube the official, done way. */
     public Cube(int cubeSize) {
         this.cubeSize = cubeSize;
         this.sides = new Side[6];
@@ -40,6 +40,10 @@ public abstract class Cube {
             }
         }
         return true;
+    }
+
+    protected Side[] getSides() {
+        return this.sides;
     }
 
     @Override
@@ -87,5 +91,54 @@ public abstract class Cube {
             }
         }
         return sb.toString();
+    }
+
+    public Boolean equals(Cube rhs) {
+        Boolean result = true;
+        for (int i = 0; i < 6; i++) {
+            if (!this.sides[i].equals(rhs.getSides()[i])) {
+                return false;
+            }
+        }
+        return result;
+    }
+
+    protected void rotateSide(Side s, Boolean clockwise) {
+        this.transpose(s);
+        if (clockwise) {
+            this.reverseRows(s);
+        } else {
+            this.reverseCols(s);
+        }
+    }
+
+    private void reverseCols(Side s) {
+        for (int i = 0; i < this.cubeSize / 2; i++) {
+            for (int j = 0; j < this.cubeSize; j++) {
+                Color temp = s.getTileColor(i, j);
+                s.setTileColor(i, j, s.getTileColor(this.cubeSize - i - 1, j));
+                s.setTileColor(this.cubeSize - i - 1, j, temp);
+            }
+        }
+    }
+
+    private void reverseRows(Side s) {
+        for (int i = 0; i < this.cubeSize; i++) {
+            for (int j = 0; j < this.cubeSize / 2; j++) {
+                Color temp = s.getTileColor(i, j);
+                s.setTileColor(i, j, s.getTileColor(i, this.cubeSize - j - 1));
+                s.setTileColor(i, this.cubeSize - j - 1, temp);
+            }
+        }
+    }
+
+    private void transpose(Side s) {
+        for (int i = 0; i < this.cubeSize; i++) {
+            for (int j = i; j < this.cubeSize; j++) {
+                Color temp = s.getTileColor(j, i);
+                s.setTileColor(j, i, s.getTileColor(i, j));
+                s.setTileColor(i, j, temp);
+            }
+        }
     }
 }

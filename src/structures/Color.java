@@ -16,7 +16,7 @@ public enum Color {
 
     private final String colorCode;
     private static Boolean initialized = false;
-    /** Variable to provide faster mapping, as 6 enum values aren't hard on the memory too and we will use it a lot later. */
+    /** Variable to provide faster mapping, as 6 enum values aren't hard on the memory and we will use it a lot later. */
     private static Map<String, Color> colorMap = new HashMap<>();
 
     private Color(String colorCode) {

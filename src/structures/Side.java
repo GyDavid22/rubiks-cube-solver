@@ -8,7 +8,7 @@ public class Side {
     /** Square shaped array to represent the colors of the side. */
     private Color[][] colors;
 
-    /** Default constructor, paints the side to one color. */
+    /** Paints the side to one color. */
     public Side(int cubeSize, Color c) {
         this.cubeSize = cubeSize;
         this.colors = new Color[this.cubeSize][this.cubeSize];
@@ -71,7 +71,7 @@ public class Side {
     }
 
     /**
-     * Method to compare if 2 sides are the same. (Rotated sides will not the same.)
+     * Method to compare if 2 sides are the same. (Rotated sides will not be the same.)
      * @param rhs The side to compare.
      * @return true If the sides are the same, false otherwise.
      */
