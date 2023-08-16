@@ -3,8 +3,10 @@ package structures;
 import java.util.HashMap;
 import java.util.Map;
 
+import exceptions.ColorNotFoundException;
+
 /** Class to represent the colors of the Rubik's cube. */
-enum Color {
+public enum Color {
     WHITE("W"),
     YELLOW("Y"),
     GREEN("G"),
@@ -29,13 +31,18 @@ enum Color {
 
     /**
      * @param colorCode One character code of the color.
-     * @return Color enum type equivalent of the parameter. Null if not found.
+     * @return Color enum type equivalent of the parameter.
+     * @throws ColorNotFoundException If colorCode has no pair in the Color enum.
      */
-    public static Color toEnum(String colorCode) {
+    public static Color toEnum(String colorCode) throws ColorNotFoundException {
         if (!Color.initialized) {
             Color.initializeMap();
         }
-        return Color.colorMap.get(colorCode);
+        Color result = Color.colorMap.get(colorCode);
+        if (result == null) {
+            throw new ColorNotFoundException();
+        }
+        return result;
     }
 
     private static void initializeMap() {

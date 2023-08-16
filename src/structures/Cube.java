@@ -21,7 +21,7 @@ public abstract class Cube {
      * @throws IllegalArgumentException If the parameter doesn't have a length of 6
      *                                  or is null.
      */
-    public Cube(int cubeSize, Side[] sides) {
+    public Cube(int cubeSize, Side[] sides) throws IllegalArgumentException {
         this.cubeSize = cubeSize;
         if (sides == null || sides.length != 6) {
             throw new IllegalArgumentException();

@@ -1,7 +1,7 @@
 package structures;
 
 /** Class to represent the sides of the Rubik's cube. */
-class Side {
+public class Side {
     /** The size of the cube, e.g. 3 means a 3*3 cube. */
     private int cubeSize;
 
