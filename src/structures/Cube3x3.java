@@ -108,12 +108,12 @@ public class Cube3x3 extends Cube {
                 }
                 // repainting the non-neighboring side, fetching colors "upside down", because
                 // this is how it looks like from the "front"
-                for (int j = this.getSize() - 1; j >= 0; j--) {
-                    this.getSides()[3].setTileColor(j, 2, colors[2][j]);
+                for (int j = 0; j < this.getSize(); j++) {
+                    this.getSides()[3].setTileColor(this.getSize() - j - 1, 2, colors[2][j]);
                 }
                 // repainting the last neighboring side, upside down again for the same reason
                 for (int j = 0; j < this.getSize(); j++) {
-                    this.getSides()[0].setTileColor(j, 0, colors[3][this.getSize() - j - 1]);
+                    this.getSides()[0].setTileColor(this.getSize() - j - 1, 0, colors[3][j]);
                 }
             } else {
                 // same logic as above
@@ -122,11 +122,11 @@ public class Cube3x3 extends Cube {
                         this.getSides()[affectedSides[j]].setTileColor(k, 0, colors[j + 1][k]);
                     }
                 }
-                for (int j = this.getSize() - 1; j >= 0; j--) {
-                    this.getSides()[3].setTileColor(j, 2, colors[0][j]);
+                for (int j = 0; j < this.getSize(); j++) {
+                    this.getSides()[3].setTileColor(this.getSize() - j - 1, 2, colors[0][j]);
                 }
                 for (int j = 0; j < this.getSize(); j++) {
-                    this.getSides()[5].setTileColor(j, 0, colors[3][this.getSize() - j - 1]);
+                    this.getSides()[5].setTileColor(this.getSize() - j - 1, 0, colors[3][j]);
                 }
             }
         }
@@ -157,11 +157,11 @@ public class Cube3x3 extends Cube {
                         this.getSides()[affectedSides[j]].setTileColor(k, 2, colors[j + 1][k]);
                     }
                 }
-                for (int j = this.getSize() - 1; j >= 0; j--) {
-                    this.getSides()[3].setTileColor(j, 0, colors[0][j]);
+                for (int j = 0; j < this.getSize(); j++) {
+                    this.getSides()[3].setTileColor(this.getSize() - j - 1, 0, colors[0][j]);
                 }
                 for (int j = 0; j < this.getSize(); j++) {
-                    this.getSides()[5].setTileColor(j, 2, colors[3][this.getSize() - j - 1]);
+                    this.getSides()[5].setTileColor(this.getSize() - j - 1, 2, colors[3][j]);
                 }
             } else {
                 for (int j = 1; j < affectedSides.length; j++) {
@@ -169,11 +169,11 @@ public class Cube3x3 extends Cube {
                         this.getSides()[affectedSides[j]].setTileColor(k, 2, colors[j - 1][k]);
                     }
                 }
-                for (int j = this.getSize() - 1; j >= 0; j--) {
-                    this.getSides()[3].setTileColor(j, 0, colors[2][j]);
+                for (int j = 0; j < this.getSize(); j++) {
+                    this.getSides()[3].setTileColor(this.getSize() - j - 1, 0, colors[2][j]);
                 }
                 for (int j = 0; j < this.getSize(); j++) {
-                    this.getSides()[0].setTileColor(j, 2, colors[3][this.getSize() - j - 1]);
+                    this.getSides()[0].setTileColor(this.getSize() - j - 1, 2, colors[3][j]);
                 }
             }
         }
