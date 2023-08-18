@@ -18,8 +18,10 @@ public class Cube3x3 extends Cube {
     public void Up(Boolean clockwise, Boolean doubleTurn) {
         int count = doubleTurn ? 2 : 1;
         for (int i = 0; i < count; i++) {
+            // rotate "up" side
             this.rotateSide(this.getSides()[0], clockwise);
 
+            // collect color data from affected other sides
             Color[] colors = new Color[12];
             int colorsIndex = 0;
             List<Integer> affectedSides = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
@@ -28,6 +30,9 @@ public class Cube3x3 extends Cube {
                     colors[colorsIndex++] = this.getSides()[j].getTileColor(0, k);
                 }
             }
+
+            // shifting affectedSides, so repainting the affected sides, shifted by 1
+            // compared to collecting
             colorsIndex = 0;
             if (clockwise) {
                 affectedSides.add(0, affectedSides.remove(affectedSides.size() - 1));
@@ -43,6 +48,7 @@ public class Cube3x3 extends Cube {
     }
 
     public void Down(Boolean clockwise, Boolean doubleTurn) {
+        // same as up but with different numbers
         int count = doubleTurn ? 2 : 1;
         for (int i = 0; i < count; i++) {
             this.rotateSide(this.getSides()[5], clockwise);
@@ -71,11 +77,102 @@ public class Cube3x3 extends Cube {
     }
 
     public void Left(Boolean clockwise, Boolean doubleTurn) {
+        int count = doubleTurn ? 2 : 1;
+        for (int i = 0; i < count; i++) {
+            // rotate "left" side
+            this.rotateSide(this.getSides()[4], clockwise);
 
+            // collect color data from 3 neighboring sides (same indexing works)
+            Color[][] colors = new Color[4][this.getSize()];
+            int[] affectedSides = { 0, 1, 5 }; // + 3
+            for (int j = 0; j < affectedSides.length; j++) {
+                for (int k = 0; k < this.getSize(); k++) {
+                    colors[j][k] = this.getSides()[affectedSides[j]].getTileColor(k, 0);
+                }
+            }
+            // collect color data from not neighboring side seperately because it needs a
+            // different indexing
+            for (int j = 0; j < this.getSize(); j++) {
+                colors[3][j] = this.getSides()[3].getTileColor(j, 2);
+            }
+
+            if (clockwise) {
+                // repainting neighboring sides, shifted
+                for (int j = 1; j < affectedSides.length; j++) {
+                    for (int k = 0; k < this.getSize(); k++) {
+                        this.getSides()[affectedSides[j]].setTileColor(k, 0, colors[j - 1][k]);
+                    }
+                }
+                // repainting the non-neighboring side, fetching colors "upside down", because
+                // this is how it looks like from the "front"
+                for (int j = this.getSize() - 1; j >= 0; j--) {
+                    this.getSides()[3].setTileColor(j, 2, colors[2][j]);
+                }
+                // repainting the last neighboring side, upside down again for the same reason
+                for (int j = 0; j < this.getSize(); j++) {
+                    this.getSides()[0].setTileColor(j, 0, colors[3][this.getSize() - j - 1]);
+                }
+            } else {
+                // same logic as above
+                for (int j = 0; j < affectedSides.length - 1; j++) {
+                    for (int k = 0; k < this.getSize(); k++) {
+                        this.getSides()[affectedSides[j]].setTileColor(k, 0, colors[j + 1][k]);
+                    }
+                }
+                for (int j = this.getSize() - 1; j >= 0; j--) {
+                    this.getSides()[3].setTileColor(j, 2, colors[0][j]);
+                }
+                for (int j = 0; j < this.getSize(); j++) {
+                    this.getSides()[5].setTileColor(j, 0, colors[3][this.getSize() - j - 1]);
+                }
+            }
+        }
     }
 
     public void Right(Boolean clockwise, Boolean doubleTurn) {
+        // same as left but with different numbers and clockwise and counterclockwise
+        // swapped because this is how it looks like from the front
+        int count = doubleTurn ? 2 : 1;
+        for (int i = 0; i < count; i++) {
+            this.rotateSide(this.getSides()[2], clockwise);
 
+            Color[][] colors = new Color[4][this.getSize()];
+            int[] affectedSides = { 0, 1, 5 }; // + 3
+            for (int j = 0; j < affectedSides.length; j++) {
+                for (int k = 0; k < this.getSize(); k++) {
+                    colors[j][k] = this.getSides()[affectedSides[j]].getTileColor(k, 2);
+                }
+            }
+            for (int j = 0; j < this.getSize(); j++) {
+                colors[3][j] = this.getSides()[3].getTileColor(j, 0);
+            }
+
+            if (clockwise) {
+                for (int j = 0; j < affectedSides.length - 1; j++) {
+                    for (int k = 0; k < this.getSize(); k++) {
+                        this.getSides()[affectedSides[j]].setTileColor(k, 2, colors[j + 1][k]);
+                    }
+                }
+                for (int j = this.getSize() - 1; j >= 0; j--) {
+                    this.getSides()[3].setTileColor(j, 0, colors[0][j]);
+                }
+                for (int j = 0; j < this.getSize(); j++) {
+                    this.getSides()[5].setTileColor(j, 2, colors[3][this.getSize() - j - 1]);
+                }
+            } else {
+                for (int j = 1; j < affectedSides.length; j++) {
+                    for (int k = 0; k < this.getSize(); k++) {
+                        this.getSides()[affectedSides[j]].setTileColor(k, 2, colors[j - 1][k]);
+                    }
+                }
+                for (int j = this.getSize() - 1; j >= 0; j--) {
+                    this.getSides()[3].setTileColor(j, 0, colors[2][j]);
+                }
+                for (int j = 0; j < this.getSize(); j++) {
+                    this.getSides()[0].setTileColor(j, 2, colors[3][this.getSize() - j - 1]);
+                }
+            }
+        }
     }
 
     public void Front(Boolean clockwise, Boolean doubleTurn) {
@@ -87,7 +184,11 @@ public class Cube3x3 extends Cube {
     }
 
     @Override
-    public Cube clone() {
-        return new Cube3x3(this.getSides().clone());
+    public Cube3x3 clone() {
+        Side[] newSides = new Side[6];
+        for (int i = 0; i < newSides.length; i++) {
+            newSides[i] = this.getSides()[i].clone();
+        }
+        return new Cube3x3(newSides);
     }
 }
