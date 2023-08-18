@@ -15,6 +15,7 @@ public class Cube3x3 extends Cube {
         super(3, sides);
     }
 
+    /** U, U', 2U, 2U' */
     public void Up(Boolean clockwise, Boolean doubleTurn) {
         int count = doubleTurn ? 2 : 1;
         for (int i = 0; i < count; i++) {
@@ -47,6 +48,7 @@ public class Cube3x3 extends Cube {
         }
     }
 
+    /** D, D', 2D, 2D' */
     public void Down(Boolean clockwise, Boolean doubleTurn) {
         // same as up but with different numbers
         int count = doubleTurn ? 2 : 1;
@@ -76,6 +78,7 @@ public class Cube3x3 extends Cube {
         }
     }
 
+    /** L, L', 2L, 2L' */
     public void Left(Boolean clockwise, Boolean doubleTurn) {
         int count = doubleTurn ? 2 : 1;
         for (int i = 0; i < count; i++) {
@@ -129,6 +132,7 @@ public class Cube3x3 extends Cube {
         }
     }
 
+    /** R, R', 2R, 2R' */
     public void Right(Boolean clockwise, Boolean doubleTurn) {
         // same as left but with different numbers and clockwise and counterclockwise
         // swapped because this is how it looks like from the front
@@ -175,10 +179,12 @@ public class Cube3x3 extends Cube {
         }
     }
 
+    /** F, F', 2F, 2F' */
     public void Front(Boolean clockwise, Boolean doubleTurn) {
 
     }
 
+    /** B, B', 2B, 2B' */
     public void Back(Boolean clockwise, Boolean doubleTurn) {
 
     }
