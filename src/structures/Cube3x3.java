@@ -237,6 +237,51 @@ public class Cube3x3 extends Cube {
         int count = doubleTurn ? 2 : 1;
         for (int i = 0; i < count; i++) {
             this.rotateSide(this.getSides()[3], clockwise);
+
+            // collecting colors from affected sides
+            Color[][] colors = new Color[4][this.getSize()];
+            for (int j = 0; j < this.getSize(); j++) {
+                colors[0][j] = this.getSides()[0].getTileColor(0, j);
+            }
+            for (int j = 0; j < this.getSize(); j++) {
+                colors[1][j] = this.getSides()[4].getTileColor(j, 0);
+            }
+            for (int j = 0; j < this.getSize(); j++) {
+                colors[2][j] = this.getSides()[5].getTileColor(2, j);
+            }
+            for (int j = 0; j < this.getSize(); j++) {
+                colors[3][j] = this.getSides()[2].getTileColor(j, 2);
+            }
+
+            // repainting colors
+            if (clockwise) {
+                for (int j = 0; j < colors[0].length; j++) {
+                    this.getSides()[4].setTileColor(j, 0, colors[0][j]);
+                }
+                // indexing backwards because of the perspective
+                for (int j = 0; j < colors[1].length; j++) {
+                    this.getSides()[5].setTileColor(2, j, colors[1][this.getSize() - j - 1]);
+                }
+                for (int j = 0; j < colors[2].length; j++) {
+                    this.getSides()[2].setTileColor(j, 2, colors[2][j]);
+                }
+                for (int j = 0; j < colors[3].length; j++) {
+                    this.getSides()[0].setTileColor(0, j, colors[3][this.getSize() - j - 1]);
+                }
+            } else {
+                for (int j = 0; j < colors[0].length; j++) {
+                    this.getSides()[2].setTileColor(j, 2, colors[0][j]);
+                }
+                for (int j = 0; j < colors[1].length; j++) {
+                    this.getSides()[0].setTileColor(0, j, colors[1][this.getSize() - j - 1]);
+                }
+                for (int j = 0; j < colors[2].length; j++) {
+                    this.getSides()[4].setTileColor(j, 0, colors[2][j]);
+                }
+                for (int j = 0; j < colors[3].length; j++) {
+                    this.getSides()[5].setTileColor(2, j, colors[3][this.getSize() - j - 1]);
+                }
+            }
         }
     }
 
