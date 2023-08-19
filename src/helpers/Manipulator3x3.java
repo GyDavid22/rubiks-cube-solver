@@ -6,7 +6,7 @@ import java.util.List;
 import structures.Cube3x3;
 
 public abstract class Manipulator3x3 {
-    private final Cube3x3 cube = new Cube3x3();
+    private Cube3x3 cube = new Cube3x3();
     private final List<String> previousSteps = new ArrayList<>();
     private final IManipulation[] manipulations = { new IManipulation() {
         @Override
@@ -46,8 +46,13 @@ public abstract class Manipulator3x3 {
         }
     } };
 
-    public Cube3x3 getCube() {
-        return cube;
+    public String cubeToString() {
+        return this.cube.toString();
+    }
+
+    /** For testing purposes only. For manipulation use this.manipulations */
+    protected Cube3x3 getCube() {
+        return this.cube;
     }
 
     public List<String> getPreviousSteps() {
@@ -66,5 +71,10 @@ public abstract class Manipulator3x3 {
             stepCode = stepCode + "'";
         }
         this.previousSteps.add(stepCode);
+    }
+
+    public void reset() {
+        this.cube = new Cube3x3();
+        this.previousSteps.clear();
     }
 }

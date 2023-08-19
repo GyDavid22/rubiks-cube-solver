@@ -13,7 +13,7 @@ public class Player3x3 extends Manipulator3x3 {
         String line;
         Boolean run = true;
         while (run) {
-            System.out.println(this.getCube().toString());
+            System.out.println(this.cubeToString());
             System.out.println(String.join(", ", this.getPreviousSteps()));
             try {
                 System.out.print("Next step should be: ");
