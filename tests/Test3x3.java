@@ -20,14 +20,19 @@ public class Test3x3 extends Manipulator3x3 {
     private List<Cube3x3> states = new ArrayList<>();
     private Map<String, Integer> errors = new HashMap<>();
 
+    private final int moves = 500;
+    private final int iterations = 1000;
+
     /**
      * Unit test for randomly scrambling and doing the steps backward.
      */
     @Test
     public void run() {
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < this.iterations; i++) {
             scramble();
             redo();
+            this.states.clear();
+            this.reset();
         }
         for (String i : errors.keySet()) {
             System.err.println(i + ": " + this.errors.get(i) + " errors");
@@ -45,7 +50,7 @@ public class Test3x3 extends Manipulator3x3 {
 
     public void scramble() {
         Random r = new Random();
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < this.moves; i++) {
             this.getManipulations()[r.nextInt(0, 5 + 1)].execute(r.nextBoolean(), r.nextBoolean());
             states.add(this.getCube().clone());
         }
@@ -63,6 +68,7 @@ public class Test3x3 extends Manipulator3x3 {
         String line;
         states.remove(states.size() - 1);
         Boolean error = false;
+        Cube3x3 stateToCheck;
         try {
             line = br.readLine();
             while (line != null) {
@@ -89,14 +95,18 @@ public class Test3x3 extends Manipulator3x3 {
                 } else if (line.contains("B")) {
                     this.getManipulations()[5].execute(clockwise, doubleTurn);
                 }
-                if (!this.states.isEmpty() && !this.getCube().equals(this.states.remove(this.states.size() - 1))) {
-                    registerError(line);
-                    error = true;
-                    break;
+                if (!this.states.isEmpty()) {
+                    stateToCheck = this.states.remove(this.states.size() - 1);
+                    if (!this.getCube().equals(stateToCheck)) {
+                        registerError(line);
+                        error = true;
+                        break;
+                    }
                 }
                 line = br.readLine();
             }
-            assertFalse("Redoing went well, but cube still not solved.", !error && !this.getCube().areAllSidesOneColor());
+            assertFalse("Redoing went well, but cube still not solved.",
+                    !error && !this.getCube().areAllSidesOneColor());
             br.close();
             isr.close();
         } catch (IOException e) {
