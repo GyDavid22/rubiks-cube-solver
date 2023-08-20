@@ -1,5 +1,13 @@
 package structures;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+import exceptions.InvalidFileException;
+
 /** Abstract class for Rubik's cubes. */
 public abstract class Cube implements Cloneable {
     /** See the documentation about the indexing. */
@@ -21,12 +29,20 @@ public abstract class Cube implements Cloneable {
      * @throws IllegalArgumentException If the parameter doesn't have a length of 6
      *                                  or is null.
      */
-    public Cube(int cubeSize, Side[] sides) throws IllegalArgumentException {
+    protected Cube(int cubeSize, Side[] sides) throws IllegalArgumentException {
         this.cubeSize = cubeSize;
         if (sides == null || sides.length != 6) {
             throw new IllegalArgumentException();
         }
         this.sides = sides;
+    }
+
+    public Cube(int cubeSize, String fileName) throws InvalidFileException {
+        this.cubeSize = cubeSize;
+        this.sides = this.readFromFile(fileName);
+        if (this.sides == null) {
+            throw new InvalidFileException();
+        }
     }
 
     protected int getSize() {
@@ -147,5 +163,69 @@ public abstract class Cube implements Cloneable {
                 s.setTileColor(i, j, temp);
             }
         }
+    }
+
+    protected Side[] readFromFile(String fileName) throws InvalidFileException {
+        Color[][][] colors = new Color[6][3][3];
+        FileInputStream fis;
+        try {
+            fis = new FileInputStream(fileName);
+        } catch (FileNotFoundException e) {
+            throw new InvalidFileException();
+        }
+        InputStreamReader isr = new InputStreamReader(fis);
+        BufferedReader br = new BufferedReader(isr);
+        try {
+            String line;
+            for (int i = 0; i < this.getSize(); i++) {
+                line = br.readLine();
+                if (line.length() != this.getSize()) {
+                    throw new Exception();
+                }
+                for (int j = 0; j < this.getSize(); j++) {
+                    colors[0][i][j] = Color.toEnum(line.substring(j, j + 1));
+                }
+            }
+            for (int i = 0; i < this.getSize(); i++) {
+                line = br.readLine();
+                if (line.length() != this.getSize() * 4) {
+                    throw new Exception();
+                }
+                for (int j = 0; j < this.getSize() * 4; j++) {
+                    colors[j / this.getSize() + 1][i][j % this.getSize()] = Color.toEnum(line.substring(j, j + 1));
+                }
+            }
+            for (int i = 0; i < this.getSize(); i++) {
+                line = br.readLine();
+                if (line.length() != this.getSize()) {
+                    throw new Exception();
+                }
+                for (int j = 0; j < this.getSize(); j++) {
+                    colors[5][i][j] = Color.toEnum(line.substring(j, j + 1));
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new InvalidFileException();
+        } finally {
+            try {
+                br.close();
+            } catch (IOException e) {
+            }
+            try {
+                isr.close();
+            } catch (IOException e) {
+            }
+            try {
+                fis.close();
+            } catch (IOException e) {
+            }
+        }
+        Side[] sides = new Side[6];
+        for (int i = 0; i < sides.length; i++) {
+            sides[i] = new Side(this.getSize(), colors[i]);
+        }
+        return sides;
     }
 }

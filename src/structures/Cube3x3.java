@@ -1,6 +1,9 @@
 package structures;
 
 import java.util.List;
+
+import exceptions.InvalidFileException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -9,6 +12,10 @@ public class Cube3x3 extends Cube {
 
     public Cube3x3() {
         super(3);
+    }
+
+    public Cube3x3(String fileName) throws InvalidFileException {
+        super(3, fileName);
     }
 
     private Cube3x3(Side[] sides) {

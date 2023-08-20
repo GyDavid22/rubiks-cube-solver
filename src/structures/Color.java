@@ -39,7 +39,7 @@ public enum Color {
             Color.initializeMap();
             Color.initialized = true;
         }
-        Color result = Color.colorMap.get(colorCode);
+        Color result = Color.colorMap.get(colorCode.toUpperCase());
         if (result == null) {
             throw new ColorNotFoundException();
         }
