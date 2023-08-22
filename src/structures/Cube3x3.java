@@ -300,4 +300,26 @@ public class Cube3x3 extends Cube {
         }
         return new Cube3x3(newSides);
     }
+
+    /**
+     * Provides some heuristics, it counts how many tiles are on the right side, not counting center pieces.
+     * @return An integer between 0 and 48. (inclusive on both ends)
+     */
+    @Override
+    public int getScore() {
+        int score = 0;
+        for (Side i : this.getSides()) {
+            Color toCount = i.getTileColor(1, 1);
+            for (int j = 0; j < this.getSize(); j++) {
+                for (int k = 0; k < this.getSize(); k++) {
+                    if (i.getTileColor(j, k) == toCount) {
+                        score++;
+                    }
+                    
+                }
+            }
+            score--; // to not count the center piece
+        }
+        return 48 - score;
+    }
 }

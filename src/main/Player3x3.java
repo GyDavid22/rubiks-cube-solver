@@ -4,8 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import helpers.Manipulator3x3;
+import structures.Cube3x3;
 
-public class Player3x3 extends Manipulator3x3 {
+public class Player3x3 {
+    private Manipulator3x3 manipulator = new Manipulator3x3(new Cube3x3());
+
     public void run() {
         InputStreamReader isr = new InputStreamReader(System.in);
         BufferedReader br = new BufferedReader(isr);
@@ -13,8 +16,8 @@ public class Player3x3 extends Manipulator3x3 {
         String line;
         Boolean run = true;
         while (run) {
-            System.out.println(this.cubeToString());
-            System.out.println(String.join(", ", this.getPreviousSteps()));
+            System.out.println(this.manipulator.cubeToString());
+            System.out.println(String.join(", ", this.manipulator.getPreviousSteps()));
             try {
                 System.out.print("Next step should be: ");
                 line = br.readLine().toUpperCase();
@@ -33,17 +36,17 @@ public class Player3x3 extends Manipulator3x3 {
                 clockwise = true;
             }
             if (line.contains("U")) {
-                this.getManipulations()[0].execute(clockwise, doubleTurn);
+                this.manipulator.getManipulations()[0].execute(clockwise, doubleTurn);
             } else if (line.contains("D")) {
-                this.getManipulations()[1].execute(clockwise, doubleTurn);
+                this.manipulator.getManipulations()[1].execute(clockwise, doubleTurn);
             } else if (line.contains("L")) {
-                this.getManipulations()[2].execute(clockwise, doubleTurn);
+                this.manipulator.getManipulations()[2].execute(clockwise, doubleTurn);
             } else if (line.contains("R")) {
-                this.getManipulations()[3].execute(clockwise, doubleTurn);
+                this.manipulator.getManipulations()[3].execute(clockwise, doubleTurn);
             } else if (line.contains("F")) {
-                this.getManipulations()[4].execute(clockwise, doubleTurn);
+                this.manipulator.getManipulations()[4].execute(clockwise, doubleTurn);
             } else if (line.contains("B")) {
-                this.getManipulations()[5].execute(clockwise, doubleTurn);
+                this.manipulator.getManipulations()[5].execute(clockwise, doubleTurn);
             } else if (line.contains("Q")) {
                 run = false;
             }

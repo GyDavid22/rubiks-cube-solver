@@ -117,13 +117,12 @@ public abstract class Cube implements Cloneable {
     }
 
     public Boolean equals(Cube rhs) {
-        Boolean result = true;
         for (int i = 0; i < 6; i++) {
             if (!this.sides[i].equals(rhs.getSides()[i])) {
                 return false;
             }
         }
-        return result;
+        return true;
     }
 
     protected void rotateSide(Side s, Boolean clockwise) {
@@ -228,4 +227,6 @@ public abstract class Cube implements Cloneable {
         }
         return sides;
     }
+
+    public abstract int getScore();
 }

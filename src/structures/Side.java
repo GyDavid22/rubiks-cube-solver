@@ -87,7 +87,7 @@ public class Side implements Cloneable {
     public Boolean equals(Side rhs) {
         for (int i = 0; i < this.cubeSize; i++) {
             for (int j = 0; j < this.cubeSize; j++) {
-                if (!this.colors[i][j].equals(rhs.getTileColor(i, j))) {
+                if (!(this.colors[i][j] == rhs.getTileColor(i, j))) {
                     return false;
                 }
             }

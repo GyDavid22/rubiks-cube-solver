@@ -23,6 +23,10 @@ public class Test3x3 extends Manipulator3x3 {
     private final int moves = 500;
     private final int iterations = 1000;
 
+    public Test3x3() {
+        super(new Cube3x3());
+    }
+
     /**
      * Unit test for randomly scrambling and doing the steps backward.
      */
