@@ -12,7 +12,7 @@ import structures.Cube3x3;
 
 public class Solver3x3 {
     private Manipulator3x3 manipulator;
-    private final int maxDepth = 20;
+    private final int maxDepth = 25;
     // private final List<Long> times = new ArrayList<>();
 
     public Solver3x3(String fileName) throws InvalidFileException {
@@ -167,7 +167,7 @@ public class Solver3x3 {
                                 break;
                             }
                         }
-                        if ((!found) && checkNow.depth + 1 < 20) {
+                        if ((!found) && checkNow.depth + 1 < this.maxDepth) {
                             toCheck.add(new AStarStructure(currentClone, currentClone.cubeScore(), checkNow.depth + 1));
                             statuses.add(currentClone);
                         }
